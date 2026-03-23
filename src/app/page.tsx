@@ -1,21 +1,25 @@
-import HeroSection from "@/components/HeroSection";
-import PhilosophySection from "@/components/PhilosophySection";
-import MonitoringSection from "@/components/MonitoringSection";
-import BehavioralAnalysisSection from "@/components/BehavioralAnalysisSection";
-import IncidentTimelineSection from "@/components/IncidentTimelineSection";
-import IntelligenceSection from "@/components/IntelligenceSection";
-import ClosingSection from "@/components/ClosingSection";
+import HeroSection from "@/components/landing/HeroSection";
+import ProblemSection from "@/components/landing/ProblemSection";
+import TechShowcase from "@/components/landing/TechShowcase";
+import FairnessPipeline from "@/components/landing/FairnessPipeline";
+import ComparisonMatrix from "@/components/landing/ComparisonMatrix";
+import DashboardPreview from "@/components/landing/DashboardPreview";
+import ArchitectureSection from "@/components/landing/ArchitectureSection";
+import CTASection from "@/components/landing/CTASection";
+import ParticleField from "@/components/landing/ParticleField";
 
 export default function Home() {
     return (
-        <main>
+        <main className="relative">
+            <ParticleField />
             <HeroSection />
-            <PhilosophySection />
-            <MonitoringSection />
-            <BehavioralAnalysisSection />
-            <IncidentTimelineSection />
-            <IntelligenceSection />
-            <ClosingSection />
+            <ProblemSection />
+            <TechShowcase />
+            <FairnessPipeline />
+            <ComparisonMatrix />
+            <DashboardPreview />
+            <ArchitectureSection />
+            <CTASection />
         </main>
     );
 }
