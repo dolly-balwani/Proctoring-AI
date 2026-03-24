@@ -57,6 +57,12 @@ function ParticleNetwork() {
             const connectionDistance = 160;
             const mouseRadius = 180;
 
+            // Theme-aware colors
+            const isLight = document.documentElement.getAttribute("data-theme") === "light";
+            const dotColor = isLight ? "5, 150, 105" : "0, 255, 136";
+            const dotGlow = isLight ? "rgba(5, 150, 105, 0.15)" : "rgba(0, 255, 136, 0.3)";
+            const glowBlur = isLight ? 3 : 6;
+
             for (let i = 0; i < particles.length; i++) {
                 const p = particles[i];
 
@@ -85,9 +91,9 @@ function ParticleNetwork() {
                 // Draw dot with glow
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 255, 136, ${p.opacity})`;
-                ctx.shadowColor = "rgba(0, 255, 136, 0.3)";
-                ctx.shadowBlur = 6;
+                ctx.fillStyle = `rgba(${dotColor}, ${p.opacity})`;
+                ctx.shadowColor = dotGlow;
+                ctx.shadowBlur = glowBlur;
                 ctx.fill();
                 ctx.shadowBlur = 0;
 
@@ -102,7 +108,7 @@ function ParticleNetwork() {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(0, 255, 136, ${alpha})`;
+                        ctx.strokeStyle = `rgba(${dotColor}, ${alpha})`;
                         ctx.lineWidth = 0.6;
                         ctx.stroke();
                     }
@@ -624,15 +630,32 @@ function CTASection() {
 }
 
 // ═══════════════════════════════════════════════════════
-// NAVBAR — Clean, minimal
+// NAVBAR — Clean, minimal + Theme Toggle
 // ═══════════════════════════════════════════════════════
 function Navbar() {
     const [scrolled, setScrolled] = useState(false);
+    const [theme, setTheme] = useState<"dark" | "light">("dark");
+
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    useEffect(() => {
+        const saved = localStorage.getItem("proctorAI-theme") as "dark" | "light" | null;
+        if (saved) {
+            setTheme(saved);
+            document.documentElement.setAttribute("data-theme", saved);
+        }
+    }, []);
+
+    const toggleTheme = () => {
+        const next = theme === "dark" ? "light" : "dark";
+        setTheme(next);
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("proctorAI-theme", next);
+    };
 
     return (
         <nav className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 lg:px-24 py-4 transition-all duration-500 ${scrolled ? "glass" : ""}`}>
@@ -645,9 +668,28 @@ function Navbar() {
                 </span>
             </a>
 
-            <a href="/login" className="px-4 py-1.5 rounded-md text-xs font-mono font-bold text-black bg-hacker-green hover:shadow-glow-green transition-all duration-300">
-                get started →
-            </a>
+            <div className="flex items-center gap-3">
+                {/* Theme toggle */}
+                <button
+                    onClick={toggleTheme}
+                    className="w-8 h-8 rounded-lg flex items-center justify-center border border-subtle hover:border-glow text-gray-500 hover:text-hacker-green transition-all duration-300"
+                    title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                >
+                    {theme === "dark" ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                    ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                    )}
+                </button>
+
+                <a href="/login" className="px-4 py-1.5 rounded-md text-xs font-mono font-bold text-black bg-hacker-green hover:shadow-glow-green transition-all duration-300">
+                    get started →
+                </a>
+            </div>
         </nav>
     );
 }
