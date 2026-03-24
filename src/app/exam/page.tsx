@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/lib/auth";
 import { useRouter } from "next/navigation";
-import { Clock, FileText, ChevronRight, Shield, Plus, Loader2 } from "lucide-react";
+import { Clock, FileText, ChevronRight, Shield, Plus, Loader2, LogOut } from "lucide-react";
 
 interface ExamItem {
     _id: string;
@@ -17,7 +17,7 @@ interface ExamItem {
 }
 
 export default function ExamListPage() {
-    const { user, loading: authLoading } = useAuth();
+    const { user, loading: authLoading, signOut, setUserRole } = useAuth();
     const router = useRouter();
     const [exams, setExams] = useState<ExamItem[]>([]);
     const [loading, setLoading] = useState(true);
@@ -73,6 +73,20 @@ export default function ExamListPage() {
                     <div className="w-6 h-6 rounded-md bg-hacker-green/10 flex items-center justify-center text-[10px] font-bold text-hacker-green">
                         {user?.name?.charAt(0) || "S"}
                     </div>
+                    <button
+                        onClick={async () => { await setUserRole("admin"); router.push("/dashboard"); }}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-gray-600 hover:text-hacker-green hover:bg-hacker-green/[0.05] transition-all"
+                        title="Switch to Admin"
+                    >
+                        <Shield className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                        onClick={async () => { await signOut(); router.push("/"); }}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-gray-600 hover:text-[#ff3366] hover:bg-[#ff3366]/[0.05] transition-all"
+                        title="Sign out"
+                    >
+                        <LogOut className="w-3.5 h-3.5" />
+                    </button>
                 </div>
             </nav>
 

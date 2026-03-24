@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import type { UserRole } from "@/types";
 
 export default function LoginPage() {
-    const { user, loading, signInWithGoogle, setUserRole } = useAuth();
+    const { user, loading, signInWithGoogle, setUserRole, signOut } = useAuth();
     const router = useRouter();
     const [showRoleSelect, setShowRoleSelect] = useState(false);
     const [isSigningIn, setIsSigningIn] = useState(false);
@@ -144,6 +144,7 @@ export default function LoginPage() {
                             <div className="font-mono text-[10px] text-gray-600 mb-6 space-y-1">
                                 <p><span className="text-hacker-green">✓</span> authenticated as {user?.email}</p>
                                 <p><span className="text-hacker-green/50">$</span> select role...</p>
+                                <button onClick={async () => { await signOut(); setShowRoleSelect(false); router.push("/"); }} className="text-[#ff3366] hover:underline mt-2">cancel & logout</button>
                             </div>
 
                             <h2 className="text-xl font-display font-bold text-white mb-2">Select your role</h2>

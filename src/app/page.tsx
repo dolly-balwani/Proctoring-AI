@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
+import { useAuth } from "@/lib/auth";
 
 // ── Interactive Particle Constellation ───────────────
 function ParticleNetwork() {
@@ -635,6 +636,7 @@ function CTASection() {
 function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [theme, setTheme] = useState<"dark" | "light">("dark");
+    const { user, signOut } = useAuth();
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -686,9 +688,20 @@ function Navbar() {
                     )}
                 </button>
 
-                <a href="/login" className="px-4 py-1.5 rounded-md text-xs font-mono font-bold text-black bg-hacker-green hover:shadow-glow-green transition-all duration-300">
-                    get started →
-                </a>
+                {user ? (
+                    <div className="flex items-center gap-2">
+                        <a href={user.role === "admin" ? "/dashboard" : "/exam"} className="px-4 py-1.5 rounded-md text-xs font-mono font-bold text-gray-400 hover:text-white transition-all duration-300">
+                            dashboard →
+                        </a>
+                        <button onClick={async () => await signOut()} className="px-4 py-1.5 rounded-md text-xs font-mono font-bold text-black bg-hacker-green hover:shadow-glow-green transition-all duration-300">
+                            logout
+                        </button>
+                    </div>
+                ) : (
+                    <a href="/login" className="px-4 py-1.5 rounded-md text-xs font-mono font-bold text-black bg-hacker-green hover:shadow-glow-green transition-all duration-300">
+                        get started →
+                    </a>
+                )}
             </div>
         </nav>
     );
