@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ===== ROOT VARIABLES ===== */
+/* ===== ROOT VARIABLES — Dark (default) ===== */
 :root {
   --bg-primary: #0a0a0a;
   --bg-secondary: #111111;
@@ -21,6 +21,162 @@
   --text-secondary: #777777;
   --text-muted: #444444;
   --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", monospace;
+}
+
+/* ===== Light Mode — Warm, Professional Palette ===== */
+[data-theme="light"] {
+  --bg-primary: #fafaf8;
+  --bg-secondary: #f0efe9;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-glass: rgba(255, 255, 255, 0.78);
+  --border-subtle: rgba(0, 0, 0, 0.07);
+  --border-glow: rgba(5, 150, 105, 0.25);
+  --green: #059669;
+  --green-dim: rgba(5, 150, 105, 0.2);
+  --cyan: #0891b2;
+  --cyan-dim: rgba(8, 145, 178, 0.2);
+  --amber: #d97706;
+  --rose: #dc2626;
+  --violet: #7c3aed;
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --text-muted: #a1a1aa;
+}
+
+/* ── Body ── */
+[data-theme="light"] body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* ── Scrollbar ── */
+[data-theme="light"] html {
+  scrollbar-color: rgba(5, 150, 105, 0.2) transparent;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(5, 150, 105, 0.15);
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(5, 150, 105, 0.35);
+}
+
+/* ── Glass ── */
+[data-theme="light"] .glass {
+  background: var(--bg-glass);
+  border-color: var(--border-subtle);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Cards ── */
+[data-theme="light"] .glass-card {
+  background: var(--bg-card);
+  border-color: var(--border-subtle);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.02);
+}
+[data-theme="light"] .glass-card:hover {
+  border-color: rgba(5, 150, 105, 0.15);
+  box-shadow: 0 4px 16px rgba(5, 150, 105, 0.06), 0 0 0 1px rgba(5, 150, 105, 0.08);
+}
+
+/* ── Backgrounds ── */
+[data-theme="light"] .dot-grid {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+}
+[data-theme="light"] .grid-bg {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+}
+
+/* ── Text overrides for Tailwind utility classes ── */
+[data-theme="light"] .text-white { color: var(--text-primary); }
+[data-theme="light"] .text-gray-400 { color: #52525b; }
+[data-theme="light"] .text-gray-500 { color: #71717a; }
+[data-theme="light"] .text-gray-600 { color: #71717a; }
+[data-theme="light"] .text-gray-700 { color: #a1a1aa; }
+[data-theme="light"] .bg-surface-0 { background-color: var(--bg-primary); }
+[data-theme="light"] .bg-surface-1 { background-color: var(--bg-secondary); }
+[data-theme="light"] .bg-surface-2 { background-color: rgba(0, 0, 0, 0.03); }
+[data-theme="light"] .bg-surface-3 { background-color: rgba(0, 0, 0, 0.05); }
+[data-theme="light"] .border-subtle { border-color: var(--border-subtle); }
+[data-theme="light"] .border-glow { border-color: var(--border-glow); }
+
+/* ── Glows — soften for light ── */
+[data-theme="light"] .glow-green {
+  text-shadow: none;
+  color: var(--green);
+  font-weight: 700;
+}
+[data-theme="light"] .glow-cyan { text-shadow: none; }
+[data-theme="light"] .box-glow-green {
+  box-shadow: 0 2px 12px rgba(5, 150, 105, 0.08);
+}
+[data-theme="light"] .shadow-glow-green {
+  box-shadow: 0 2px 12px rgba(5, 150, 105, 0.1);
+}
+
+/* ── Gradient Button ── */
+[data-theme="light"] .gradient-btn {
+  background: linear-gradient(135deg, #059669 0%, #0891b2 100%);
+  color: #fff;
+}
+[data-theme="light"] .gradient-btn:hover {
+  box-shadow: 0 6px 24px rgba(5, 150, 105, 0.2);
+}
+
+/* ── Gradient Text ── */
+[data-theme="light"] .gradient-text {
+  background: linear-gradient(135deg, #059669 0%, #0891b2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── hacker-green Tailwind class ── */
+[data-theme="light"] .text-hacker-green { color: #059669; }
+[data-theme="light"] .bg-hacker-green { background-color: #059669; }
+[data-theme="light"] .border-hacker-green { border-color: #059669; }
+
+/* ── Scan line — barely visible on light ── */
+[data-theme="light"] .scan-line::after {
+  background: linear-gradient(90deg, transparent, rgba(5, 150, 105, 0.15), transparent);
+  opacity: 0.2;
+}
+
+/* ── Noise overlay — lighter ── */
+[data-theme="light"] .noise-overlay::before {
+  opacity: 0.01;
+}
+
+/* ── Status dots ── */
+[data-theme="light"] .status-dot.live {
+  background: var(--green);
+  box-shadow: 0 0 6px rgba(5, 150, 105, 0.3);
+}
+[data-theme="light"] .status-dot.warning {
+  background: var(--amber);
+  box-shadow: 0 0 6px rgba(217, 119, 6, 0.3);
+}
+[data-theme="light"] .status-dot.danger {
+  background: var(--rose);
+  box-shadow: 0 0 6px rgba(220, 38, 38, 0.3);
+}
+
+/* ── Divider ── */
+[data-theme="light"] .divider-glow {
+  background: linear-gradient(90deg, transparent, rgba(5, 150, 105, 0.12), transparent);
+}
+
+/* ── Selection ── */
+[data-theme="light"] ::selection {
+  background-color: rgba(5, 150, 105, 0.2);
+  color: #18181b;
+}
+
+/* ── Section label ── */
+[data-theme="light"] .section-label {
+  color: var(--green);
 }
 
 /* ===== BASE ===== */
@@ -43,6 +199,7 @@ body {
   color: var(--text-primary);
   font-family: "Inter", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 ::selection {
